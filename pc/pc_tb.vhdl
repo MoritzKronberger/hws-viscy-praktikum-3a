@@ -46,6 +46,7 @@ begin
 	end procedure;
   -- internal variable
   variable max: std_logic_vector(15 downto 0) := "1111111111111111";
+  
   begin
 
 	pc_in <= "1111111111111111";
@@ -66,12 +67,12 @@ inc_loop: for i in 0 to to_integer(unsigned(max)) loop
     assert pc_out = counter  report "Zähler nicht korrekt erhöht";
 end loop inc_loop;
 
-	for i in 0 to to_integer(unsigned(max)) loop
+load_loop: for i in 0 to to_integer(unsigned(max)) loop
 	pc_in <= i
     reset <= '0'; inc <= '0'; load <= '1';
     run_cycle     -- wait 1 cycle
     assert pc_out = i  report "Zähler in loop nicht korrekt geladen";
-	end loop
+end loop hold_loop;
 
 	pc_in <= "1111000011110000"
     reset <= '0'; inc <= '0'; load <= '1';
@@ -79,15 +80,13 @@ end loop inc_loop;
     assert pc_out = "1111000011110000"  report "Zähler nicht korrekt geladen";
 
 
--- hold loop	
-hold_loop: for i in 0 to 15 loop
 	pc_in <= "1100110011001100"
 	reset <= '0'; inc <= '0'; load <= '0';
     run_cycle     -- wait 1 cycle
     assert pc_out = "1111000011110000"  report "Zähler wurde nicht korrekt gehalten!";
-end loop hold_loop
 
--- all signals 1, reset should be dominant	
+
+	-- all signals 1, reset should be dominant	
 	pc_in <= "1100110011001100"
 	reset <= '1'; inc <= '1'; load <= '1';
     run_cycle     -- wait 1 cycle
