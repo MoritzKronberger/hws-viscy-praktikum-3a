@@ -19,12 +19,12 @@ BEGIN
 		CASE sel IS
 			WHEN "000" => y <= std_logic_vector(signed(a) + signed(b)); -- add
 			WHEN "001" => y <= std_logic_vector(signed(a) - signed(b)); -- sub
-			WHEN "010" => y <= std_logic_vector(shift_left(signed(a), 1)); -- sal
-			WHEN "011" => y <= std_logic_vector(shift_right(signed(b), 1)); -- sar
+			WHEN "010" => y <= a(14 DOWNTO 0) & '0'; -- sal (shift arimethic left)
+			WHEN "011" => y <= a(15) & a(15 DOWNTO 1); -- sar (shift arimethic right)
 			WHEN "100" => y <= a AND b; -- and
 			WHEN "101" => y <= a OR b; -- or
 			WHEN "110" => y <= a XOR b; -- xor
-			WHEN "111" => y <= NOT b; -- not
+			WHEN "111" => y <= NOT a; -- not
             WHEN others => y <= "0000000000000000";
 		END CASE;
 
