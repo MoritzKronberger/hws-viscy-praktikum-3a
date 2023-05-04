@@ -154,6 +154,8 @@ begin
             test_regfile('0', '1', '1', "XXXXXXXXXXXXXXXX", i);
             -- Test setting low and high byte with random data
             test_regfile('1', '1', '1', "XXXXXXXXXXXXXXXX", i);
+            -- Test setting nothing with random data
+            test_regfile('0', '0', '1', "XXXXXXXXXXXXXXXX", i);
         end loop;
 
     -- Print a note & finish simulation now
