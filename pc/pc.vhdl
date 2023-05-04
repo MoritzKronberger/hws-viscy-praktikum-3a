@@ -21,7 +21,7 @@ begin
     pc_out <= reg;
 
     -- State changes
-    process (clk, inc, load, reset)
+    process (clk)
     begin
         -- On clock rising edge
         if rising_edge(clk) then
