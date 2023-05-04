@@ -67,67 +67,67 @@ begin
             if debug = '1' then
                 assert false 
                     report "Testing a="
-                        & INTEGER'image(to_integer(unsigned(a)))
+                        & INTEGER'image(to_integer(signed(a)))
                         & " b="
-                        & INTEGER'image(to_integer(unsigned(b)))
+                        & INTEGER'image(to_integer(signed(b)))
                         severity note;
             end if;
 
             -- Test add
             sel <= "000";
             wait for 1 ns;
-            assert y = std_logic_vector(unsigned(a) + unsigned(b))
+            assert y = std_logic_vector(signed(a) + signed(b))
                 report "Received unexpected result for add operation y="
-                    & INTEGER'image(to_integer(unsigned(y)));
+                    & INTEGER'image(to_integer(signed(y)));
             
             -- Test sub
             sel <= "001";
             wait for 1 ns;
-            assert y = std_logic_vector(unsigned(a) - unsigned(b))
+            assert y = std_logic_vector(signed(a) - signed(b))
                 report "Received unexpected result for sub operation y=" 
-                    & INTEGER'image(to_integer(unsigned(y)));
+                    & INTEGER'image(to_integer(signed(y)));
             
             -- Test left shift
             sel <= "010";
             wait for 1 ns;
             assert y = a(14 downto 0) & '0'
                 report "Received unexpected result for left shift operation y="
-                    & INTEGER'image(to_integer(unsigned(y)));
+                    & INTEGER'image(to_integer(signed(y)));
             
             -- Test right shift
             sel <= "011";
             wait for 1 ns;
             assert y = a(15) & a(15 downto 1)
                 report "Received unexpected result for right shift operation y="
-                    & INTEGER'image(to_integer(unsigned(y)));
+                    & INTEGER'image(to_integer(signed(y)));
         
             -- Test AND
             sel <= "100";
             wait for 1 ns;
             assert y = (a AND b)
                 report "Received unexpected result for AND operation y="
-                    & INTEGER'image(to_integer(unsigned(y)));
+                    & INTEGER'image(to_integer(signed(y)));
             
             -- Test OR
             sel <= "101";
             wait for 1 ns;
             assert y = (a OR b)
                 report "Received unexpected result for OR operation y="
-                    & INTEGER'image(to_integer(unsigned(y)));
+                    & INTEGER'image(to_integer(signed(y)));
             
             -- Test XOR
             sel <= "110";
             wait for 1 ns;
             assert y = (a XOR b)
                 report "Received unexpected result for XOR operation y="
-                    & INTEGER'image(to_integer(unsigned(y)));
+                    & INTEGER'image(to_integer(signed(y)));
         
             -- Test NOT
             sel <= "111";
             wait for 1 ns;
             assert y = NOT a
                 report "Received unexpected result for NOT operation y="
-                    & INTEGER'image(to_integer(unsigned(y)));
+                    & INTEGER'image(to_integer(signed(y)));
         
             -- Test zero output
             sel <= "000";
@@ -139,7 +139,7 @@ begin
             end if;
             assert zero = t_zero
                 report "Received unexpected value for zero output zero="
-                    & INTEGER'image(to_integer(unsigned'("" & zero)));
+                    & INTEGER'image(to_integer(signed'("" & zero)));
         end;
     begin
         a <= "0000000000000000"; -- 0
