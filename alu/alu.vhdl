@@ -25,7 +25,7 @@ BEGIN
 			WHEN "101" => y <= a OR b; -- or
 			WHEN "110" => y <= a XOR b; -- xor
 			WHEN "111" => y <= NOT a; -- not
-            WHEN others => y <= "0000000000000000";
+            WHEN others => y <= "----------------";
 		END CASE;
 
 		IF b = "0000000000000000" THEN
