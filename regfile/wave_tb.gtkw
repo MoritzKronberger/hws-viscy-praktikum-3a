@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun May 21 12:36:23 2023
+[*]
+[dumpfile] "C:\Users\Moritz\Documents\Hochschule Augsburg\Semester 1 - Master\Hardwaresysteme\Prozessor\hws-viscy-praktikum-3a\regfile\regfile\tb_wave.ghw"
+[savefile] "C:\Users\Moritz\Documents\Hochschule Augsburg\Semester 1 - Master\Hardwaresysteme\Prozessor\hws-viscy-praktikum-3a\regfile\wave_tb.gtkw"
+[timestart] 0
+[size] 1385 600
+[pos] 511 58
+*-42.687679 20500800000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.regfile_tb.
+[sst_width] 197
+[signals_width] 232
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@28
+top.regfile_tb.load_hi
+top.regfile_tb.load_lo
+#{top.regfile_tb.out1_sel[2:0]} top.regfile_tb.out1_sel[2] top.regfile_tb.out1_sel[1] top.regfile_tb.out1_sel[0]
+#{top.regfile_tb.out0_sel[2:0]} top.regfile_tb.out0_sel[2] top.regfile_tb.out0_sel[1] top.regfile_tb.out0_sel[0]
+#{top.regfile_tb.in_sel[2:0]} top.regfile_tb.in_sel[2] top.regfile_tb.in_sel[1] top.regfile_tb.in_sel[0]
+@420
+#{top.regfile_tb.out1_data[15:0]} top.regfile_tb.out1_data[15] top.regfile_tb.out1_data[14] top.regfile_tb.out1_data[13] top.regfile_tb.out1_data[12] top.regfile_tb.out1_data[11] top.regfile_tb.out1_data[10] top.regfile_tb.out1_data[9] top.regfile_tb.out1_data[8] top.regfile_tb.out1_data[7] top.regfile_tb.out1_data[6] top.regfile_tb.out1_data[5] top.regfile_tb.out1_data[4] top.regfile_tb.out1_data[3] top.regfile_tb.out1_data[2] top.regfile_tb.out1_data[1] top.regfile_tb.out1_data[0]
+#{top.regfile_tb.out0_data[15:0]} top.regfile_tb.out0_data[15] top.regfile_tb.out0_data[14] top.regfile_tb.out0_data[13] top.regfile_tb.out0_data[12] top.regfile_tb.out0_data[11] top.regfile_tb.out0_data[10] top.regfile_tb.out0_data[9] top.regfile_tb.out0_data[8] top.regfile_tb.out0_data[7] top.regfile_tb.out0_data[6] top.regfile_tb.out0_data[5] top.regfile_tb.out0_data[4] top.regfile_tb.out0_data[3] top.regfile_tb.out0_data[2] top.regfile_tb.out0_data[1] top.regfile_tb.out0_data[0]
+#{top.regfile_tb.in_data[15:0]} top.regfile_tb.in_data[15] top.regfile_tb.in_data[14] top.regfile_tb.in_data[13] top.regfile_tb.in_data[12] top.regfile_tb.in_data[11] top.regfile_tb.in_data[10] top.regfile_tb.in_data[9] top.regfile_tb.in_data[8] top.regfile_tb.in_data[7] top.regfile_tb.in_data[6] top.regfile_tb.in_data[5] top.regfile_tb.in_data[4] top.regfile_tb.in_data[3] top.regfile_tb.in_data[2] top.regfile_tb.in_data[1] top.regfile_tb.in_data[0]
+[pattern_trace] 1
+[pattern_trace] 0

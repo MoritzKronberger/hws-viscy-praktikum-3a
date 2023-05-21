@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun May 21 12:11:55 2023
+[*]
+[dumpfile] "C:\Users\Moritz\Documents\Hochschule Augsburg\Semester 1 - Master\Hardwaresysteme\Prozessor\hws-viscy-praktikum-3a\alu\alu\tb_wave.ghw"
+[savefile] "C:\Users\Moritz\Documents\Hochschule Augsburg\Semester 1 - Master\Hardwaresysteme\Prozessor\hws-viscy-praktikum-3a\alu\tb_wave.gtkw"
+[timestart] 0
+[size] 1583 575
+[pos] 714 64
+*-30.711550 4880000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.alu_tb.
+[sst_width] 197
+[signals_width] 192
+[sst_expanded] 1
+[sst_vpaned_height] 144
+@28
+#{top.alu_tb.sel[2:0]} top.alu_tb.sel[2] top.alu_tb.sel[1] top.alu_tb.sel[0]
+@420
+#{top.alu_tb.a[15:0]} top.alu_tb.a[15] top.alu_tb.a[14] top.alu_tb.a[13] top.alu_tb.a[12] top.alu_tb.a[11] top.alu_tb.a[10] top.alu_tb.a[9] top.alu_tb.a[8] top.alu_tb.a[7] top.alu_tb.a[6] top.alu_tb.a[5] top.alu_tb.a[4] top.alu_tb.a[3] top.alu_tb.a[2] top.alu_tb.a[1] top.alu_tb.a[0]
+#{top.alu_tb.b[15:0]} top.alu_tb.b[15] top.alu_tb.b[14] top.alu_tb.b[13] top.alu_tb.b[12] top.alu_tb.b[11] top.alu_tb.b[10] top.alu_tb.b[9] top.alu_tb.b[8] top.alu_tb.b[7] top.alu_tb.b[6] top.alu_tb.b[5] top.alu_tb.b[4] top.alu_tb.b[3] top.alu_tb.b[2] top.alu_tb.b[1] top.alu_tb.b[0]
+@421
+#{top.alu_tb.y[15:0]} top.alu_tb.y[15] top.alu_tb.y[14] top.alu_tb.y[13] top.alu_tb.y[12] top.alu_tb.y[11] top.alu_tb.y[10] top.alu_tb.y[9] top.alu_tb.y[8] top.alu_tb.y[7] top.alu_tb.y[6] top.alu_tb.y[5] top.alu_tb.y[4] top.alu_tb.y[3] top.alu_tb.y[2] top.alu_tb.y[1] top.alu_tb.y[0]
+[pattern_trace] 1
+[pattern_trace] 0

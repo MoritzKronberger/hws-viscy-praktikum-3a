@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun May 21 12:30:42 2023
+[*]
+[dumpfile] "C:\Users\Moritz\Documents\Hochschule Augsburg\Semester 1 - Master\Hardwaresysteme\Prozessor\hws-viscy-praktikum-3a\pc\pc\tb_wave.ghw"
+[savefile] "C:\Users\Moritz\Documents\Hochschule Augsburg\Semester 1 - Master\Hardwaresysteme\Prozessor\hws-viscy-praktikum-3a\pc\tb_wave.gtkw"
+[timestart] 0
+[size] 1534 600
+[pos] 440 40
+*-37.868122 763400000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.pc_tb.
+[sst_width] 197
+[signals_width] 240
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@28
+top.pc_tb.reset
+top.pc_tb.load
+top.pc_tb.inc
+@420
+#{top.pc_tb.pc_in[15:0]} top.pc_tb.pc_in[15] top.pc_tb.pc_in[14] top.pc_tb.pc_in[13] top.pc_tb.pc_in[12] top.pc_tb.pc_in[11] top.pc_tb.pc_in[10] top.pc_tb.pc_in[9] top.pc_tb.pc_in[8] top.pc_tb.pc_in[7] top.pc_tb.pc_in[6] top.pc_tb.pc_in[5] top.pc_tb.pc_in[4] top.pc_tb.pc_in[3] top.pc_tb.pc_in[2] top.pc_tb.pc_in[1] top.pc_tb.pc_in[0]
+#{top.pc_tb.pc_out[15:0]} top.pc_tb.pc_out[15] top.pc_tb.pc_out[14] top.pc_tb.pc_out[13] top.pc_tb.pc_out[12] top.pc_tb.pc_out[11] top.pc_tb.pc_out[10] top.pc_tb.pc_out[9] top.pc_tb.pc_out[8] top.pc_tb.pc_out[7] top.pc_tb.pc_out[6] top.pc_tb.pc_out[5] top.pc_tb.pc_out[4] top.pc_tb.pc_out[3] top.pc_tb.pc_out[2] top.pc_tb.pc_out[1] top.pc_tb.pc_out[0]
+[pattern_trace] 1
+[pattern_trace] 0
