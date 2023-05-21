@@ -17,7 +17,7 @@ architecture RTL of PC is
     -- Internal register
     signal reg: std_logic_vector (15 downto 0);
 begin
-    -- Continous output
+    -- Continuous output
     pc_out <= reg;
 
     -- State changes
@@ -34,10 +34,6 @@ begin
             -- Increment
             elsif inc = '1' then
                 reg <= std_logic_vector(unsigned(reg) + 1);
-            -- Do nothing, but assign value to output?
-            -- TODO: Needed?
-            else
-                reg <= reg;
             end if;
         end if;
     end process;
