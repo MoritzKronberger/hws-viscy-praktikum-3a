@@ -31,8 +31,6 @@ architecture TESTBENCH of REGFILE_TB is
     signal in_data, out0_data, out1_data: std_logic_vector (15 downto 0);
     signal in_sel, out0_sel, out1_sel: std_logic_vector (2 downto 0);
     signal clk, load_lo, load_hi: std_logic;
-    -- Internal register (to keep track of expected output values)
-    variable reg: t_regfile;
 begin
     -- Instantiate REGFILE
     TEST_REGFILE: REGFILE port map(
@@ -48,6 +46,9 @@ begin
     );
 
     process
+        -- Internal register (to keep track of expected output values)
+        variable reg: t_regfile;
+
         -- Run clock cycle
         procedure run_cycle is
             variable period: time := 10 ns;
