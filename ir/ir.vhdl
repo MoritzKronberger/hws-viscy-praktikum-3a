@@ -1,3 +1,6 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
 entity IR is
     port (
         clk: in std_logic;
