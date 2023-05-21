@@ -1,5 +1,5 @@
 ; ---------------------------------------------------
-; Instruction set
+; Befehlssatz
 ; ---------------------------------------------------
 ; add     00 000 ddd sss ttt --    add r2, r3, r5
 ; sub     00 001 ddd sss ttt --    sub r1, r4, r6
@@ -21,11 +21,11 @@
 ; jnz     10 -11 --- sss ttt --    jnz r1, r7
 
 ; ---------------------------------------------------
-; Test VISCY instructions:
-; - alle instructions testen
-; - alle Register (r0 - r7) benutzen
-; - gesamte Wortbreite nutzen
-; - möglichst verschiedene Zahlenwerte nutzen
+; VISCY -Befehlssatz-Test:
+; - Alle Befehle testen
+; - Alle Register (r0 - r7) benutzen
+; - Gesamte Wortbreite nutzen
+; - Möglichst verschiedene Zahlenwerte nutzen
 ;
 ; Referenz: Gesamt-Foliensatz S. 329, 330
 ; ---------------------------------------------------
@@ -40,7 +40,7 @@ start:
         ldil r1, 1           ; r1 := --------00000001 (lo=1)
         ldil r1, 0           ; r1 := 0000000000000001 (=1)
 
-        ; Test load-Befehle
+        ; load-Befehle testen
         ; ---------------------------------------------------
 
         ; load immediate low
@@ -65,7 +65,7 @@ start:
         st [r0], r6    ; Ergebnis schreiben
         add r0, r0, r1 ; Zieladresse inkrementieren
 
-        ; Test ALU-Befehle
+        ; ALU-Befehle testen
         ; ---------------------------------------------------
 
         ldil r5, 10 ; r5 := --------00001010 (lo=10)
@@ -124,7 +124,7 @@ start:
         st [r0], r7    ; Ergebnis schreiben
         add r0, r0, r1 ; Zieladresse inkrementieren
 
-        ; Test jump-Befehle
+        ; jump-Befehle testen
         ; ---------------------------------------------------
 
         ; jump
