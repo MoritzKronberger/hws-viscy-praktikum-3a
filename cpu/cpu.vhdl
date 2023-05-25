@@ -2,7 +2,7 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY VISCY_CPU IS
+ENTITY CPU IS
 	PORT (
 		clk : IN STD_LOGIC;
 		reset : IN STD_LOGIC;
@@ -15,7 +15,7 @@ ENTITY VISCY_CPU IS
 	);
 END CPU;
 
-ARCHITECTURE RTL OF VISCY_CPU IS
+ARCHITECTURE RTL OF CPU IS
 	-- Component declarations
 	COMPONENT ALU IS
 		PORT (
@@ -70,7 +70,6 @@ ARCHITECTURE RTL OF VISCY_CPU IS
 			c_reg_ldmem,
 			c_reg_ldi,
 			c_regfile_load_lo,
-			c_regfile_load_hi,
 			c_regfile_load_hi,
 			c_pc_load,
 			c_pc_inc,
