@@ -1,0 +1,24 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun May 21 12:17:07 2023
+[*]
+[dumpfile] "C:\Users\Moritz\Documents\Hochschule Augsburg\Semester 1 - Master\Hardwaresysteme\Prozessor\hws-viscy-praktikum-3a\ir\ir\tb_wave.ghw"
+[savefile] "C:\Users\Moritz\Documents\Hochschule Augsburg\Semester 1 - Master\Hardwaresysteme\Prozessor\hws-viscy-praktikum-3a\ir\tb_wave.gtkw"
+[timestart] 0
+[size] 1686 600
+[pos] -1 -1
+*-39.862827 2469030000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.ir_tb.
+[sst_width] 197
+[signals_width] 257
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@28
+top.ir_tb.load
+@421
+#{top.ir_tb.ir_in[15:0]} top.ir_tb.ir_in[15] top.ir_tb.ir_in[14] top.ir_tb.ir_in[13] top.ir_tb.ir_in[12] top.ir_tb.ir_in[11] top.ir_tb.ir_in[10] top.ir_tb.ir_in[9] top.ir_tb.ir_in[8] top.ir_tb.ir_in[7] top.ir_tb.ir_in[6] top.ir_tb.ir_in[5] top.ir_tb.ir_in[4] top.ir_tb.ir_in[3] top.ir_tb.ir_in[2] top.ir_tb.ir_in[1] top.ir_tb.ir_in[0]
+@420
+#{top.ir_tb.ir_out[15:0]} top.ir_tb.ir_out[15] top.ir_tb.ir_out[14] top.ir_tb.ir_out[13] top.ir_tb.ir_out[12] top.ir_tb.ir_out[11] top.ir_tb.ir_out[10] top.ir_tb.ir_out[9] top.ir_tb.ir_out[8] top.ir_tb.ir_out[7] top.ir_tb.ir_out[6] top.ir_tb.ir_out[5] top.ir_tb.ir_out[4] top.ir_tb.ir_out[3] top.ir_tb.ir_out[2] top.ir_tb.ir_out[1] top.ir_tb.ir_out[0]
+[pattern_trace] 1
+[pattern_trace] 0

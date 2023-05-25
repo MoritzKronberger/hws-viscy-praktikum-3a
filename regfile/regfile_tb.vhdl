@@ -31,8 +31,6 @@ architecture TESTBENCH of REGFILE_TB is
     signal in_data, out0_data, out1_data: std_logic_vector (15 downto 0);
     signal in_sel, out0_sel, out1_sel: std_logic_vector (2 downto 0);
     signal clk, load_lo, load_hi: std_logic;
-    -- Internal register (to keep track of expected output values)
-    signal reg: t_regfile;
 begin
     -- Instantiate REGFILE
     TEST_REGFILE: REGFILE port map(
@@ -48,6 +46,9 @@ begin
     );
 
     process
+        -- Internal register (to keep track of expected output values)
+        variable reg: t_regfile;
+
         -- Run clock cycle
         procedure run_cycle is
             variable period: time := 10 ns;
@@ -102,11 +103,11 @@ begin
                 in_data <= test_data;
                 -- Set low byte of internal register
                 if lo = '1' then
-                    reg(i)(7 downto 0) <= test_data(7 downto 0);
+                    reg(i)(7 downto 0) := test_data(7 downto 0);
                 end if;
                 -- Set high byte of internal register
                 if hi = '1' then
-                    reg(i)(15 downto 8) <= test_data(15 downto 8);
+                    reg(i)(15 downto 8) := test_data(15 downto 8);
                 end if;
                 -- Run clock cycle
                 run_cycle;
@@ -144,18 +145,47 @@ begin
             end loop;
         end procedure;
     begin
-        -- Initialize all registers with 0
-        test_regfile('1', '1', '0', "0000000000000000", 0);
+        -- Test for specific cases
+        -- All zeros
+        test_regfile('1', '0', '0', "0000000000000000", 0); -- low byte
+        test_regfile('0', '1', '0', "0000000000000000", 0); -- high byte
+        test_regfile('1', '1', '0', "0000000000000000", 0); -- low & high byte
+        test_regfile('0', '0', '0', "0000000000000000", 0); -- nothing
+        -- All ones
+        test_regfile('1', '0', '0', "1111111111111111", 0); -- low byte
+        test_regfile('0', '1', '0', "1111111111111111", 0); -- high byte
+        test_regfile('1', '1', '0', "1111111111111111", 0); -- low & high byte
+        test_regfile('0', '0', '0', "1111111111111111", 0); -- nothing
+        -- Low byte ones
+        test_regfile('1', '0', '0', "0000000011111111", 0); -- low byte
+        test_regfile('0', '1', '0', "0000000011111111", 0); -- high byte
+        test_regfile('1', '1', '0', "0000000011111111", 0); -- low & high byte
+        test_regfile('0', '0', '0', "0000000011111111", 0); -- nothing
+        -- High byte ones
+        test_regfile('1', '0', '0', "1111111100000000", 0); -- low byte
+        test_regfile('0', '1', '0', "1111111100000000", 0); -- high byte
+        test_regfile('1', '1', '0', "1111111100000000", 0); -- low & high byte
+        test_regfile('0', '0', '0', "1111111100000000", 0); -- nothing
+        -- Alternating 01
+        test_regfile('1', '0', '0', "0101010101010101", 0); -- low byte
+        test_regfile('0', '1', '0', "0101010101010101", 0); -- high byte
+        test_regfile('1', '1', '0', "0101010101010101", 0); -- low & high byte
+        test_regfile('0', '0', '0', "0101010101010101", 0); -- nothing
+        -- Alternating 10
+        test_regfile('1', '0', '0', "1010101010101010", 0); -- low byte
+        test_regfile('0', '1', '0', "1010101010101010", 0); -- high byte
+        test_regfile('1', '1', '0', "1010101010101010", 0); -- low & high byte
+        test_regfile('0', '0', '0', "1010101010101010", 0); -- nothing
 
         for i in 1 to 10000 loop
             -- Test setting low byte with random data
-            test_regfile('1', '0', '1', "XXXXXXXXXXXXXXXX", i);
+            test_regfile('1', '0', '1', "----------------", i);
             -- Test setting high byte with random data
-            test_regfile('0', '1', '1', "XXXXXXXXXXXXXXXX", i);
+            test_regfile('0', '1', '1', "----------------", i);
             -- Test setting low and high byte with random data
-            test_regfile('1', '1', '1', "XXXXXXXXXXXXXXXX", i);
+            test_regfile('1', '1', '1', "----------------", i);
             -- Test setting nothing with random data
-            test_regfile('0', '0', '1', "XXXXXXXXXXXXXXXX", i);
+            test_regfile('0', '0', '1', "----------------", i);
         end loop;
 
     -- Print a note & finish simulation now
