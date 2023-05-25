@@ -1,74 +1,94 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
 
-entity CONTROLLER is
-port (
-clk, reset: in std_logic;
-ir: in std_logic_vector(15 downto 0); -- Befehlswort
-ready, zero: in std_logic; -- weitere Statussignale
-c_reg_ldmem, c_reg_ldi, -- Auswahl beim Register-Laden
-c_regfile_load_lo, c_regfile_load_hi, -- Steuersignale Reg.-File
-c_pc_load, c_pc_inc, -- Steuereingaenge PC
-c_ir_load, -- Steuereingang IR
-c_mem_rd, c_mem_wr, -- Signale zum Speicher
-c_adr_pc_not_reg : out std_logic -- Auswahl Adress-Quelle
-);
-end CONTROLLER;
+ENTITY CONTROLLER IS
+	PORT (
+		clk, reset DOWNTO IN STD_LOGIC;
+		ir DOWNTO IN STD_LOGIC_VECTOR(15 DOWNTO 0); -- Befehlswort
+		ready, zero DOWNTO IN STD_LOGIC; -- weitere Statussignale
+		c_reg_ldmem, c_reg_ldi, -- Auswahl beim Register-Laden
+		c_regfile_load_lo, c_regfile_load_hi, -- Steuersignale Reg.-File
+		c_pc_load, c_pc_inc, -- Steuereingaenge PC
+		c_ir_load, -- Steuereingang IR
+		c_mem_rd, c_mem_wr, -- Signale zum Speicher
+		c_adr_pc_not_reg DOWNTO OUT STD_LOGIC -- Auswahl Adress-Quelle
+	);
+END CONTROLLER;
 
-architecture RTL of CONTROLLER is
+ARCHITECTURE RTL OF CONTROLLER IS
 
-  type t_state is ( s_reset, s_if1, s_if2, s_id, s_alu, s_load, s_ldil, s_ldih, s_halt );
-  signal state, next_state: t_state;
-begin
-  -- Zustandsregister (taktsynchroner Prozess) ...
-  process (clk)   -- (nur) Taktsignal in Sensitivitätsliste
-  begin
-    if rising_edge (clk) then
-      if reset = '1' then state <= s_reset;  -- Reset hat Vorrang!
-      else state <= next_state;
-    end if;
-  end process;
-  -- Prozess für die Übergangs- und Ausgabefunktion...
-  process (state, ready, zero, ir)  -- Zustand und alle Status-Signale in Sensitiviätsliste 
-  begin
-    -- Default-Werte für alle Ausgangssignale...
-    c_regfile_load_lo <= '0';
-    c_regfile_load_hi <= '0';
-    c_adr_pc_not_reg <= '-';  
-	
-	case state is
-       when s_reset =>
-         next_state <= s_if1;
-       when s_if1 =>
-         if ready = '0' then next_state <= s_if2; end if;
-       when s_if2 =>
-         -- Zustandsänderungen dürfen mit Bedingungen verknüpft sein,
-         -- Zuweisungen an Steuersignale nicht!
-         if ready = '1' then next_state <= s_id; end if;
-         c_adr_pc_not_reg <= '1';
-         c_mem_rd <= '1';
-         c_ir_load <= '1';
-       when s_id =>
-	     if ir(15:14) = '10' then next_state <= s_halt; end if;
-		 if ir(15:14) = '01' then next_state <= s_load; end if;
-		 if ir(15:14) = '00' then next_state <= s_alu; end if;
-         c_pc_inc <= '1';
-       when s_halt =>
-	     wait;
-	   when s_alu =>
-	   
-	   when s_load =>
-		if ir(12:11) = '00' then next_state <= s_ldil; end if;
-		if ir(12:11) = '01' then next_state <= s_ldih; end if;
-	   when s_ldil =>
-		c_regfile_load_lo = '1';
-		next_state <= s_if1;
-	   when s_ldih =>
-	    c_regfile_load_hi = '1';
-		next_state <= s_if1;
-       when others => null;
-     end case;
- end process;
+	TYPE t_state IS (s_reset, s_if1, s_if2, s_id, s_alu, s_load, s_ldil, s_ldih, s_halt);
+	SIGNAL state, next_state DOWNTO t_state;
+BEGIN
+	-- Zustandsregister (taktsynchroner Prozess) ...
+	PROCESS (clk) -- (nur) Taktsignal in Sensitivitätsliste
+	BEGIN
+		IF rising_edge (clk) THEN
+			IF reset = '1' THEN
+				state <= s_reset; -- Reset hat Vorrang!
+			ELSE state <= next_state;
+			END IF;
+		END PROCESS;
+		-- Prozess für die Übergangs- und Ausgabefunktion...
+		PROCESS (state, ready, zero, ir) -- Zustand und alle Status-Signale in Sensitiviätsliste 
+		BEGIN
+			-- Default-Werte für alle Ausgangssignale...
+			c_reg_ldmem <= '0';
+			c_reg_ldi <= '0';
+			c_regfile_load_lo <= '0';
+			c_regfile_load_hi <= '0';
+			c_pc_load <= '0';
+			c_pc_inc <= '0';
+			c_ir_load <= '1'; -- Evtl 0??
+			c_mem_rd <= '0';
+			c_mem_wr <= '0';
+			c_adr_pc_not_reg <= '-';
 
-end RTL;
+			CASE state IS
+				WHEN s_reset =>
+					next_state <= s_if1;
+				WHEN s_if1 =>
+					IF ready = '0' THEN
+						next_state <= s_if2;
+					END IF;
+				WHEN s_if2 =>
+					-- Zustandsänderungen dürfen mit Bedingungen verknüpft sein,
+					-- Zuweisungen an Steuersignale nicht!
+					IF ready = '1' THEN
+						next_state <= s_id;
+					END IF;
+					c_adr_pc_not_reg <= '1';
+					c_mem_rd <= '1';
+					c_ir_load <= '1';
+				WHEN s_id =>
+					IF ir(15 DOWNTO 14) = '10' THEN
+						next_state <= s_halt;
+          ELSIF ir(15 DOWNTO 14) = '01' AND ir(12 DOWNTO 11) = '00' THEN
+						next_state <= s_ldil;
+          ELSIF ir(15 DOWNTO 14) = '01' AND ir(12 DOWNTO 11) = '01' THEN
+						next_state <= s_ldih;
+					ELSIF ir(15 DOWNTO 14) = '00' THEN
+						next_state <= s_alu;
+          ELSE THEN
+            next_state <= s_halt; -- Halt if invald
+					END IF;
+					c_pc_inc <= '1';
+				WHEN s_halt =>
+					NULL; -- Do nothing
+				WHEN s_alu =>
+          -- Load low & high
+          c_regfile_load_lo = '1';
+          c_regfile_load_hi = '1';
+          next_state <= s_if1;
+				WHEN s_ldil =>
+					c_regfile_load_lo = '1';
+					next_state <= s_if1;
+				WHEN s_ldih =>
+					c_regfile_load_hi = '1';
+					next_state <= s_if1;
+				WHEN OTHERS => NULL;
+			END CASE;
+		END PROCESS;
+
+	END RTL;
