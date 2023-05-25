@@ -41,10 +41,11 @@ BEGIN
 		c_regfile_load_hi <= '0';
 		c_pc_load <= '0';
 		c_pc_inc <= '0';
-		c_ir_load <= '1'; -- Evtl 0??
+		c_ir_load <= '0';
 		c_mem_rd <= '0';
 		c_mem_wr <= '0';
 		c_adr_pc_not_reg <= '-';
+		next_state <= state;
 
 		CASE state IS
 			WHEN s_reset =>
@@ -84,9 +85,11 @@ BEGIN
 				next_state <= s_if1;
 			WHEN s_ldil =>
 				c_regfile_load_lo <= '1';
+				c_reg_ldi <= '1';
 				next_state <= s_if1;
 			WHEN s_ldih =>
 				c_regfile_load_hi <= '1';
+				c_reg_ldi <= '1';
 				next_state <= s_if1;
 			WHEN OTHERS => NULL;
 		END CASE;
