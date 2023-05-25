@@ -5,7 +5,7 @@ USE ieee.numeric_std.ALL;
 ENTITY VISCY_CPU IS
 	PORT (
 		clk : IN STD_LOGIC;
-        reset : IN STD_LOGIC;
+		reset : IN STD_LOGIC;
 		adr : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
 		rdata : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 		wdata : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
@@ -16,11 +16,11 @@ ENTITY VISCY_CPU IS
 END CPU;
 
 ARCHITECTURE RTL OF VISCY_CPU IS
-    -- Component declarations
+	-- Component declarations
 	COMPONENT ALU IS
 		PORT (
 			a : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
-            b : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
+			b : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 			sel : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
 			y : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
 			zero : OUT STD_LOGIC
@@ -61,34 +61,34 @@ ARCHITECTURE RTL OF VISCY_CPU IS
 	COMPONENT CONTROLLER IS
 		PORT (
 			clk : IN STD_LOGIC;
-            reset : IN STD_LOGIC;
+			reset : IN STD_LOGIC;
 
 			ir : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 			ready : IN STD_LOGIC;
-            zero : IN STD_LOGIC;
+			zero : IN STD_LOGIC;
 
 			c_reg_ldmem,
-            c_reg_ldi,
-            c_regfile_load_lo,
-            c_regfile_load_hi,
+			c_reg_ldi,
+			c_regfile_load_lo,
+			c_regfile_load_hi,
 			c_regfile_load_hi,
 			c_pc_load,
-            c_pc_inc,
+			c_pc_inc,
 			c_ir_load,
 			c_mem_rd,
-            c_mem_wr,
+			c_mem_wr,
 			c_adr_pc_not_reg : OUT STD_LOGIC
 		);
 	END COMPONENT;
 
-    -- Configuration
+	-- Configuration
 	FOR ALL : ALU USE ENTITY WORK.ALU(RTL);
 	FOR ALL : IR USE ENTITY WORK.IR(RTL);
 	FOR ALL : PC USE ENTITY WORK.PC(RTL);
 	FOR ALL : REGFILE USE ENTITY WORK.REGFILE(RTL);
 	FOR ALL : CONTROLLER USE ENTITY WORK.CONTROLLER(RTL);
 
-    -- Internal Signals
+	-- Internal Signals
 
 	-- ALU
 	SIGNAL alu_y : STD_LOGIC_VECTOR (15 DOWNTO 0);
@@ -185,13 +185,13 @@ BEGIN
 	BEGIN
 		IF c_adr_pc_not_reg = '1' THEN
 			adr <= pc_out;
-		ELSE 
-            adr <= regfile_out0_data;
+		ELSE
+			adr <= regfile_out0_data;
 		END IF;
 	END PROCESS;
 
 	-- Multiplexer für Regfile
-	PROCESS (c_reg_ldi, c_reg_ldmem, ir_out, alu_y, rdata) 
+	PROCESS (c_reg_ldi, c_reg_ldmem, ir_out, alu_y, rdata)
 	BEGIN
 		IF c_reg_ldi = '1' THEN
 			regfile_in_data <= ir_out(7 DOWNTO 0) & ir_out(7 DOWNTO 0);
