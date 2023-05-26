@@ -158,7 +158,6 @@ BEGIN
     reset <= '1';
     run_cycle;
     reset <= '0';
-    run_cycle;
 
     -- Run clock cycles
     for i in 0 to n loop
