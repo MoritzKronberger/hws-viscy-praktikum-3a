@@ -164,8 +164,8 @@ BEGIN
       wait for clk_period / 2;
     end procedure;
 
-    -- Clock cycles (make sure that entire memory content is executed)
-    variable n: integer := 1000;
+    -- End testbench after n cycles without read signal
+    variable read_tb_timeout: integer := 20;
     
   begin
 
@@ -175,8 +175,13 @@ BEGIN
     reset <= '0';
 
     -- Run clock cycles
-    for i in 0 to n loop
+    -- Exit loop if read timeout expires
+    L: while read_tb_timeout > 0 loop
         run_cycle;
+        -- Increment timeout if read signal is not set
+        IF rd = '0' THEN
+            read_tb_timeout := read_tb_timeout - 1;
+        END IF;
     end loop;
     
     -- Print a note & finish simulation now
