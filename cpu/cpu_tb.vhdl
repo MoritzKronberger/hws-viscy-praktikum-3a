@@ -165,7 +165,7 @@ BEGIN
     end procedure;
 
     -- End testbench after n cycles without read signal
-    variable read_tb_timeout: integer := 20;
+    variable read_tb_timeout: integer := 500;
     
   begin
 
