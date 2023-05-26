@@ -102,8 +102,8 @@ BEGIN
 					-- Halt for undefined instruction
 					WHEN OTHERS =>
 						next_state <= s_halt;
-					c_pc_inc <= '1';
 				END CASE;
+				c_pc_inc <= '1';
 			-- Fetch new instruction after ALU
 			WHEN s_alu =>
 				next_state <= s_if1;
