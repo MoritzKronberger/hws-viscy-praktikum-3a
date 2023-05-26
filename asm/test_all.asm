@@ -38,7 +38,7 @@ start:
         ldil r0, result & 255
         ldih r0, result >> 8 ; r0 := result (Adresse)
         ldil r1, 1           ; r1 := --------00000001 (lo=1)
-        ldil r1, 0           ; r1 := 0000000000000001 (=1)
+        ldih r1, 0           ; r1 := 0000000000000001 (=1)
 
         ; load-Befehle testen
         ; ---------------------------------------------------
