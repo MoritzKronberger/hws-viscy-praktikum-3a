@@ -55,8 +55,8 @@ start:
         ldil r6, loop & 255
         ldih r6, loop >> 8 ; r6 := loop (Sprungadresse)
 
-        ldil r7, add & 255
-        ldih r7, add >> 8 ; r7 := add (Sprungadresse)
+        ldil r7, add_acc & 255
+        ldih r7, add_acc >> 8 ; r7 := add (Sprungadresse)
 
 loop:
 
@@ -80,7 +80,7 @@ loop:
 
         halt ; Fertig: Prozessor anhalten
 
-add:
+add_acc:
 
         add r0, r0, r1 ; Faktor 2 zu Akkumulator addieren
 
