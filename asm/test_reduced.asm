@@ -34,22 +34,19 @@ start:
        ; -> Alle Bits == 0 -> korrekt
        ; -> Sonst -> Fehler
        ; ---------------------------------------------------
-       xor r0, r0, r0 ; r0 := 00000000 00000000 (=0)
-       xor r7, r7, r7 ; r7 := 00000000 00000000 (=0)
+       xor r0, r0, r0 ; r0 := 00000000 00000000 (=0) | Funktioniert nicht, da Bits = 'U'?
+       xor r7, r7, r7 ; r7 := 00000000 00000000 (=0) | Funktioniert nicht, da Bits = 'U'?
 
        ; load-Befehle testen
        ; ---------------------------------------------------
 
        ; load immediate low
-       xor r1, r1, r1 ; r1 := 00000000 00000000 (=0)
        ldil r1, 5     ; r1 := 00000000 00000101 (lo=5)
 
        ; load immediate high
-       xor r2, r2, r2   ; r2 := 00000000 00000000 (=0)
        ldih r2, 8       ; r2 := 00001000 00000000 (2048)
 
        ; load immediate low & high
-       xor r3, r3, r3   ; r3 := 00000000 00000000 (=0)
        ldil r3, 6       ; r3 := -------- 00000110 (lo=6)
        ldih r3, 12      ; r3 := 00001100 00000110 (=3078)
 
@@ -63,7 +60,6 @@ start:
        ldih r2, 17 ; r2 := 00010001 00000010 (=4354)
 
        ; add
-       xor r4, r4, r4   ; r3 := 00000000 00000000 (=0)
        add r4, r1, r2   ; r4 := 00010001 00001100 (=4364)
        ; Kontrollregister updaten
        ldil r7, 0x0C
@@ -71,7 +67,6 @@ start:
        xor r0, r4, r7 ; r0 := 00000000 00000000 (0)
 
        ; subtract
-       xor r5, r5, r5   ; r5 := 00000000 00000000 (=0)
        sub r5, r2, r1   ; r5 := 00010000 11111000 (=4344)
        ; Kontrollregister updaten
        ldil r7, 0xF8
@@ -80,7 +75,6 @@ start:
 
 
        ; shift arithmetic left
-       xor r6, r6, r6   ; r6 := 00000000 00000000 (=0)
        sal r6, r2       ; r6 := 00100010 00000100 (=8708)
        ; Kontrollregister updaten
        ldil r7, 0x04
@@ -89,7 +83,6 @@ start:
 
 
        ; shift arithmetic right
-       xor r3, r3, r3   ; r3 := 00000000 00000000 (=0)
        sar r3, r2       ; r3 := 00001000 10000001 (=2177)
        ; Kontrollregister updaten
        ldil r7, 0x81
@@ -100,7 +93,6 @@ start:
        ; r2 := 00010001 00000010 (=4354)
 
        ; and
-       xor r3, r3, r3 ; r3 := 00000000 00000000 (=0)
        and r3, r1, r2 ; r3 := 00000000 00000010 (=2)
        ; Kontrollregister updaten
        ldil r7, 0x02
@@ -108,7 +100,6 @@ start:
        xor r0, r3, r7 ; r0 := 00000000 00000000 (0)
 
        ; or
-       xor r3, r3, r3   ; r3 := 00000000 00000000 (=0)
        or r3, r1, r2    ; r3 := 00010001 00001010 (=4362)
        ; Kontrollregister updaten
        ldil r7, 0x0A
@@ -116,7 +107,6 @@ start:
        xor r0, r3, r7 ; r0 := 00000000 00000000 (0)
 
        ; xor
-       xor r3, r3, r3   ; r3 := 00000000 00000000 (=0)
        xor r3, r1, r2   ; r3 := 00010001 00001000 (=4360)
        ; Kontrollregister updaten
        ldil r7, 0x08
@@ -124,7 +114,6 @@ start:
        xor r0, r3, r7 ; r0 := 00000000 00000000 (0)
 
        ; not
-       xor r3, r3, r3    ; r3 := 00000000 00000000 (=0)
        not r3, r2        ; r3 := 11101110 11111101 (=61181)
        ; Kontrollregister updaten
        ldil r7, 0xFD
