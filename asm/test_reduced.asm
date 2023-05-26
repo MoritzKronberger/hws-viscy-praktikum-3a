@@ -28,10 +28,10 @@
        .org 0x0000 ; alles folgende ab Adresse 0
 start: 
        ; Kontrollregister r0, r7:
-       ; - Jeden Test-Wert mit Erwartungswert (r7) ANDen
+       ; - Jeden Test-Wert mit Erwartungswert (r7) XORen
        ; - In r0 schreiben
        ;
-       ; -> Alle Bits == 1 (65535) -> korrekt
+       ; -> Alle Bits == 0 -> korrekt
        ; -> Sonst -> Fehler
        ; ---------------------------------------------------
        xor r0, r0, r0 ; r0 := 00000000 00000000 (=0)
@@ -66,35 +66,35 @@ start:
        xor r4, r4, r4   ; r3 := 00000000 00000000 (=0)
        add r4, r1, r2   ; r4 := 00010001 00001100 (=4364)
        ; Kontrollregister updaten
-       ldil r7, 00001100
-       ldih r7, 00010001 ; r7 := 00010001 00001100 (=4364)
-       and r0, r4, r7    ; r0 := 11111111 11111111 (65535)
+       ldil r7, 0x0C
+       ldih r7, 0x11  ; r7 := 00010001 00001100 (=4364)
+       xor r0, r4, r7 ; r0 := 00000000 00000000 (0)
 
        ; subtract
        xor r5, r5, r5   ; r5 := 00000000 00000000 (=0)
-       sub r5, r1, r2   ; r5 := 00010000 11111000 (=4344)
+       sub r5, r2, r1   ; r5 := 00010000 11111000 (=4344)
        ; Kontrollregister updaten
-       ldil r7, 00001100
-       ldih r7, 00010000 ; r7 := 00010000 11111000 (=4344)
-       and r0, r5, r7    ; r0 := 11111111 11111111 (65535)
+       ldil r7, 0x0C
+       ldih r7, 0x10  ; r7 := 00010000 11111000 (=4344)
+       xor r0, r5, r7 ; 00000000 00000000 (0)
 
 
        ; shift arithmetic left
        xor r6, r6, r6   ; r6 := 00000000 00000000 (=0)
        sal r6, r2       ; r6 := 00100010 00000100 (=8708)
        ; Kontrollregister updaten
-       ldil r7, 00000100
-       ldih r7, 00100010 ; r7 := 00100010 00000100 (=8708)
-       and r0, r6, r7    ; r0 := 11111111 11111111 (65535)
+       ldil r7, 0x04
+       ldih r7, 0x22  ; r7 := 00100010 00000100 (=8708)
+       xor r0, r6, r7 ; r0 := 00000000 00000000 (0)
 
 
        ; shift arithmetic right
        xor r3, r3, r3   ; r3 := 00000000 00000000 (=0)
        sar r3, r2       ; r3 := 00001000 10000001 (=2177)
        ; Kontrollregister updaten
-       ldil r7, 10000001
-       ldih r7, 00001000 ; r7 := 00001000 10000001 (=2177)
-       and r0, r3, r7    ; r0 := 11111111 11111111 (65535)
+       ldil r7, 0x81
+       ldih r7, 0x08  ; r7 := 00001000 10000001 (=2177)
+       xor r0, r3, r7 ; r0 := 00000000 00000000 (0)
 
        ; r1 := 00000000 00001010 (=10)
        ; r2 := 00010001 00000010 (=4354)
@@ -103,33 +103,33 @@ start:
        xor r3, r3, r3 ; r3 := 00000000 00000000 (=0)
        and r3, r1, r2 ; r3 := 00000000 00000010 (=2)
        ; Kontrollregister updaten
-       ldil r7, 00000010
-       ldih r7, 00000000 ; r7 := 00000000 00000010 (=2)
-       and r0, r3, r7    ; r0 := 11111111 11111111 (65535)
+       ldil r7, 0x02
+       ldih r7, 0x00  ; r7 := 00000000 00000010 (=2)
+       xor r0, r3, r7 ; r0 := 00000000 00000000 (0)
 
        ; or
        xor r3, r3, r3   ; r3 := 00000000 00000000 (=0)
        or r3, r1, r2    ; r3 := 00010001 00001010 (=4362)
        ; Kontrollregister updaten
-       ldil r7, 00001010
-       ldih r7, 00010001 ; r7 := 00010001 00001010 (=4362)
-       and r0, r3, r7    ; r0 := 11111111 11111111 (65535)
+       ldil r7, 0x0A
+       ldih r7, 0x11  ; r7 := 00010001 00001010 (=4362)
+       xor r0, r3, r7 ; r0 := 00000000 00000000 (0)
 
        ; xor
        xor r3, r3, r3   ; r3 := 00000000 00000000 (=0)
        xor r3, r1, r2   ; r3 := 00010001 00001000 (=4360)
        ; Kontrollregister updaten
-       ldil r7, 00001000
-       ldih r7, 00010001 ; r7 := 00010001 00001000 (=4360)
-       and r0, r3, r7    ; r0 := 11111111 11111111 (65535)
+       ldil r7, 0x08
+       ldih r7, 0x11  ; r7 := 00010001 00001000 (=4360)
+       xor r0, r3, r7 ; r0 := 00000000 00000000 (0)
 
        ; not
        xor r3, r3, r3    ; r3 := 00000000 00000000 (=0)
        not r3, r2        ; r3 := 11101110 11111101 (=61181)
        ; Kontrollregister updaten
-       ldil r7, 11111101
-       ldih r7, 11101110 ; r7 := 11101110 11111101 (=61181)
-       and r0, r3, r7    ; r0 := 11111111 11111111 (65535)
+       ldil r7, 0xFD
+       ldih r7, 0xEE  ; r7 := 11101110 11111101 (=61181)
+       xor r0, r3, r7 ; 00000000 00000000 (0)
 
        ; halt-Befehl testen
        ; ---------------------------------------------------
