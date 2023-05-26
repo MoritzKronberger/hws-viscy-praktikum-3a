@@ -23,14 +23,22 @@
 ; Referenz:
 ; - Gesamt-Foliensatz S. 329, 330
 ; https://en.wikipedia.org/wiki/Binary_multiplier
+; ---------------------------------------------------
 
+; Speicher mit initialen Werten vorbelegen
+; ---------------------------------------------------
 
-        .org 0x0000 ; alles folgende ab Adresse 0
+        .org 0x100 ; Speicher ab Adresse 256 vorbelegen
 
 data:
 
-        .data 0x100, 0x06 ; 6 in 0x100 ablegen
-        .data 0x101, 0x02 ; 2 in 0x101 ablegen
+        .data 0xB0 ; 176 in 0x100 ablegen
+        .data 0xA7 ; 167 in 0x101 ablegen
+
+; Hauptprogramm
+; ---------------------------------------------------
+
+        .org 0x0000 ; Hauptprogramm ab Adresse 0
 
 start:
 
@@ -101,6 +109,15 @@ add_acc:
 
         halt ; Fertig: Prozessor anhalten
 
+; Speicher für Ergebnis reservieren
+; ---------------------------------------------------
+
         .org 0x0102
 result: .res 1 ; Ein Wort reservieren
         .end
+
+
+; ---------------------------------------------------
+; Erwartet:
+; 0x72D0 (29392)
+; ---------------------------------------------------
