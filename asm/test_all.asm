@@ -128,8 +128,8 @@ start:
         ; ---------------------------------------------------
 
         ; jump
-        ldil r2 4              ; r2 := --------00000100 (lo=4)
-        ldih r2 0              ; r2 := 0000000000000100 (=4)
+        ldil r2, 4              ; r2 := --------00000100 (lo=4)
+        ldih r2, 0              ; r2 := 0000000000000100 (=4)
         ldil r3, jumpskip & 255
         ldih r3, jumpskip >> 8 ; r3 := jumpskip (Adresse)
         jmp r3                 ; jump to jumpskip label
@@ -140,8 +140,8 @@ start:
         add r0, r0, r1         ; Zieladresse inkrementieren
 
         ; jump zero (on zero = do jump)
-        ldil r2 11            ; r2 := --------00001011 (lo=11)
-        ldih r2 52            ; r2 := 1101000000001011 (=53259)
+        ldil r2, 11            ; r2 := --------00001011 (lo=11)
+        ldih r2, 52            ; r2 := 1101000000001011 (=53259)
         xor r4, r4, r4
         ldil r3, jztskip & 255
         ldih r3, jztskip >> 8 ; r3 := jztskip (Adresse)
@@ -153,8 +153,8 @@ start:
         add r0, r0, r1        ; Zieladresse inkrementieren
 
         ; jump zero (non zero = do not jump)
-        ldil r2 0xFF          ; r2 := --------11111111
-        ldih r2 0xFF          ; r2 := 1111111111111111
+        ldil r2, 0xFF          ; r2 := --------11111111
+        ldih r2, 0xFF          ; r2 := 1111111111111111
         ldil r4, 1            ; r4 := --------00000001 (lo=1)
         ldil r3, jzfskip & 255
         ldih r3, jzfskip >> 8 ; r3 := jzfskip (Adresse)
@@ -166,8 +166,8 @@ start:
         add r0, r0, r1        ; Zieladresse inkrementieren
 
         ; jump non zero (non zero = do jump)
-        ldil r2 47             ; r2 := --------00101111 (lo=47)
-        ldih r2 52             ; r2 := 0000001100101111 (=815)
+        ldil r2, 47             ; r2 := --------00101111 (lo=47)
+        ldih r2, 52             ; r2 := 0000001100101111 (=815)
         ldil r4, 1             ; r4 := --------00000001 (lo=1)
         ldil r3, jnztskip & 255
         ldih r3, jnztskip >> 8 ; r3 := jnztskip (Adresse)
@@ -179,8 +179,8 @@ start:
         add r0, r0, r1         ; Zieladresse inkrementieren
 
         ; jump non zero (zero = do not jump)
-        ldil r2 0xFF           ; r2 := --------11111111
-        ldih r2 0xFF           ; r2 := 1111111111111111
+        ldil r2, 0xFF           ; r2 := --------11111111
+        ldih r2, 0xFF           ; r2 := 1111111111111111
         xor r4, r4, r4         ; r4 := 0000000000000000 (=0)
         ldil r3, jnzfskip & 255
         ldih r3, jnzfskip >> 8 ; r3 := jnzfskip (Adresse)
