@@ -29,8 +29,8 @@
 
 data:
 
-        .data 0x100, 6
-        .data 0x101, 2
+        .data 0x100, 0x06 ; 6 in 0x100 ablegen
+        .data 0x101, 0x02 ; 2 in 0x101 ablegen
 
 start:
 
@@ -45,7 +45,7 @@ start:
         xor r0, r0, r0 ; Clear r0 (Akkumulator)
 
         ldil r3, 1 ;
-        ldih r3, 0 ; r3 := 0000000000000001 (Maske)
+        ldih r3, 0 ; r3 := 0000000000000001 (1) (Maske und Decrement-Helper)
 
         ; r4 := Helper (letztes Bit == 0?)
 
