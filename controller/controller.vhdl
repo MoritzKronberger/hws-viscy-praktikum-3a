@@ -49,6 +49,7 @@ BEGIN
 		next_state <= state;
 
 		-- Zustandsaenderungen dürfen mit Bedingungen verknüpft sein
+		-- Zuweisungen an Steuersignale duerfen nur von state abhaengig sein!
 		CASE state IS
 			WHEN s_reset =>
 				next_state <= s_if1;
@@ -62,6 +63,9 @@ BEGIN
 					next_state <= s_id;
 				END IF;
 				-- Else remain at current state (=default)
+				c_adr_pc_not_reg <= '1';
+				c_mem_rd <= '1';
+				c_ir_load <= '1';
 			WHEN s_id =>
 				CASE ir(15 downto 14) IS
 					-- ALU
@@ -98,16 +102,23 @@ BEGIN
 					-- Halt for undefined instruction
 					WHEN OTHERS =>
 						next_state <= s_halt;
+					c_pc_inc <= '1';
 				END CASE;
 			-- Fetch new instruction after ALU
 			WHEN s_alu =>
 				next_state <= s_if1;
+				c_regfile_load_lo <= '1';
+				c_regfile_load_hi <= '1';
 			-- Fetch new instruction after ldil
 			WHEN s_ldil =>
 				next_state <= s_if1;
+				c_regfile_load_lo <= '1';
+				c_reg_ldi <= '1';
 			-- Fetch new instruction after ldih
 			WHEN s_ldih =>
 				next_state <= s_if1;
+				c_regfile_load_hi <= '1';
+				c_reg_ldi <= '1';
 			WHEN s_wait =>
 				-- If memory ready
 				IF ready = '0' THEN
@@ -128,9 +139,17 @@ BEGIN
 					next_state <= s_ld2;
 				END IF;
 				-- Else remain at current state (=default)
+				-- Signal to memory that CPU wants to load data
+				c_mem_rd <= '1';
+				c_reg_ldmem <= '1';
 			-- Fetch new instruction after load
 			WHEN s_ld2 =>
 				next_state <= s_if1;
+				-- Actually load data into regfile once memory is ready
+				c_mem_rd <= '1';
+				c_reg_ldmem <= '1';
+				c_regfile_load_lo <= '1';
+				c_regfile_load_hi <= '1';
 			-- Fetch new instruction after store
 			WHEN s_st =>
 				-- If load confirmed by memory
@@ -138,56 +157,21 @@ BEGIN
 					next_state <= s_if1;
 				END IF;
 				-- Else remain at current state (=default)
+				c_mem_wr <= '1';
 			-- Fetch new instruction after jump
 			WHEN s_jmp =>
 				next_state <= s_if1;
+				c_pc_load <= '1';
 			-- Fetch new instruction after jz
 			WHEN s_jz =>
 				next_state <= s_if1;
+				c_pc_load <= '1';
 			-- Fetch new instruction after jnz
 			WHEN s_jnz =>
 				next_state <= s_if1;
+				c_pc_load <= '1';
 			WHEN OTHERS =>
 				next_state <= s_halt;
-		END CASE;
-
-		-- Zuweisungen an Steuersignale duerfen nur von state abhaengig sein!
-		CASE state IS
-			WHEN s_if2 =>
-				c_adr_pc_not_reg <= '1';
-				c_mem_rd <= '1';
-				c_ir_load <= '1';
-			WHEN s_id =>
-				c_pc_inc <= '1';
-			WHEN s_alu =>
-				c_regfile_load_lo <= '1';
-				c_regfile_load_hi <= '1';
-			WHEN s_ldil =>
-				c_regfile_load_lo <= '1';
-				c_reg_ldi <= '1';
-			WHEN s_ldih =>
-				c_regfile_load_hi <= '1';
-				c_reg_ldi <= '1';
-			-- Signal to memory that CPU wants to load data
-			WHEN s_ld1 =>
-				c_mem_rd <= '1';
-				c_reg_ldmem <= '1';
-			-- Actually load data into regfile once memory is ready
-			WHEN s_ld2 =>
-				c_mem_rd <= '1';
-				c_reg_ldmem <= '1';
-				c_regfile_load_lo <= '1';
-				c_regfile_load_hi <= '1';
-			WHEN s_st =>
-				c_mem_wr <= '1';
-			WHEN s_jmp =>
-				c_pc_load <= '1';
-			WHEN s_jz =>
-				c_pc_load <= '1';
-			WHEN s_jnz =>
-				c_pc_load <= '1';
-			WHEN OTHERS =>
-				NULL;
 		END CASE;
 	END PROCESS;
 END RTL;
