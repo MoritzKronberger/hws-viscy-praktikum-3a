@@ -74,7 +74,7 @@ start:
        xor r5, r5, r5   ; r5 := 00000000 00000000 (=0)
        sub r5, r2, r1   ; r5 := 00010000 11111000 (=4344)
        ; Kontrollregister updaten
-       ldil r7, 0x0C
+       ldil r7, 0xF8
        ldih r7, 0x10  ; r7 := 00010000 11111000 (=4344)
        xor r0, r5, r7 ; 00000000 00000000 (0)
 
