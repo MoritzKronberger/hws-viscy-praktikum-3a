@@ -29,8 +29,8 @@
 
 data:
 
-        .data 0x100 6
-        .data 0x101 2
+        .data 0x100, 6
+        .data 0x101, 2
 
 start:
 
@@ -67,7 +67,7 @@ loop:
         sal r1, r1 ; Ersten Faktor nach links schieben
         sar r2, r2 ; Zweiten Faktor nach rechts schieben (nächstes Bit betrachten)
         
-        sub r5, r5, 1 ; Loop counter dekrementieren
+        sub r5, r5, r3 ; Loop counter dekrementieren
 
         jnz r5, r6 ; Nächste Loop-Iteration
 
@@ -89,7 +89,7 @@ add:
         sal r1, r1 ; Ersten Faktor nach links schieben
         sar r2, r2 ; Zweiten Faktor nach rechts schieben (nächstes Bit betrachten)
         
-        sub r5, r5, 1 ; Loop counter dekrementieren
+        sub r5, r5, r3 ; Loop counter dekrementieren
 
         jnz r5, r6 ; Nächste Loop-Iteration
 
