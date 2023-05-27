@@ -26,6 +26,7 @@
 ; ---------------------------------------------------
 
        .org 0x0000 ; alles folgende ab Adresse 0
+       .start
 start: 
        ; Kontrollregister r0, r7:
        ; - Jeden Test-Wert mit Erwartungswert (r7) XORen
