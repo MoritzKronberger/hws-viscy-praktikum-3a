@@ -29,6 +29,7 @@
 ; ---------------------------------------------------
 
         .org 0x100 ; Speicher ab Adresse 256 vorbelegen
+        .start
 
 data:
 
