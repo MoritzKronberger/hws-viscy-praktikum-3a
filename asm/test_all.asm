@@ -31,6 +31,7 @@
 ; ---------------------------------------------------
 
         .org 0x0000 ; alles folgende ab Adresse 0
+        .start
 start:
 
         ; Helper-Register
@@ -141,14 +142,14 @@ jumpskip:                      ; r2 := 0000000000000100 (=4)
 
         ; jump zero (on zero = do jump)
         ldil r2, 11            ; r2 := --------00001011 (lo=11)
-        ldih r2, 52            ; r2 := 1101000000001011 (=53259)
+        ldih r2, 52            ; r2 := 0011010000001011 (=13323)
         xor r4, r4, r4
         ldil r3, jztskip & 255
         ldih r3, jztskip >> 8 ; r3 := jztskip (Adresse)
         jz r4, r3             ; jump to jztskip label
         ldil r2, 0xFF         ; should be skipped
         ldih r2, 0xFF         ; should be skipped
-jztskip:                      ; r2 := 1101000000001011 (=53259)
+jztskip:                      ; r2 := 0011010000001011 (=13323)
         st [r0], r2           ; Ergebnis schreiben
         add r0, r0, r1        ; Zieladresse inkrementieren
 
@@ -160,21 +161,21 @@ jztskip:                      ; r2 := 1101000000001011 (=53259)
         ldih r3, jzfskip >> 8 ; r3 := jzfskip (Adresse)
         jz r4, r3             ; do not jump to jzfskip label
         ldil r2, 17           ; should be executed, r2 := --------00010001 (lo=17)
-        ldih r2, 23           ; should be executed, r2 := 1011100000010001 (=47121)
-jzfskip:                      ; r2 := 1011100000010001 (=47121)
+        ldih r2, 23           ; should be executed, r2 := 0001011100010001 (=5905)
+jzfskip:                      ; r2 := 0001011100010001 (=5905)
         st [r0], r2           ; Ergebnis schreiben
         add r0, r0, r1        ; Zieladresse inkrementieren
 
         ; jump non zero (non zero = do jump)
         ldil r2, 47            ; r2 := --------00101111 (lo=47)
-        ldih r2, 52            ; r2 := 0000001100101111 (=815)
+        ldih r2, 52            ; r2 := 0011010000101111 (=13359)
         ldil r4, 1             ; r4 := --------00000001 (lo=1)
         ldil r3, jnztskip & 255
         ldih r3, jnztskip >> 8 ; r3 := jnztskip (Adresse)
         jnz r4, r3             ; jump to jnztskip label
         ldil r2, 0xFF          ; should be skipped
         ldih r2, 0xFF          ; should be skipped
-jnztskip:                      ; r2 := 0000001100101111 (=815)
+jnztskip:                      ; r2 := 0011010000101111 (=13359)
         st [r0], r2            ; Ergebnis schreiben
         add r0, r0, r1         ; Zieladresse inkrementieren
 
@@ -216,14 +217,14 @@ result: .res 17 ; 17 Worte reservieren (für alle Test-Cases)
 ; 0x0106 | 0x2204 | 0010001000000100 (=8708)  | shift arithmetic left
 ; 0x0107 | 0x0881 | 0000100010000001 (=2177)  | shift arithmetic right
 ; 0x0108 | 0x0002 | 0000000000000010 (=2)     | and
-; 0x0109 | 0x110A | 0001000100001010 (=4362)  | or -- FEHLER
+; 0x0109 | 0x110A | 0001000100001010 (=4362)  | or
 ; 0x010A | 0x1108 | 0001000100001000 (=4360)  | xor
 ; 0x010B | 0xEEFD | 1110111011111101 (=61181) | not
 
 ; jump-Befehle:
 ; ---------------------------------------------------
 ; 0x010C | 0x0004 | 0000000000000100 (=4)     | jump
-; 0x010D | 0xD00B | 1101000000001011 (=53259) | jump zero (true)
-; 0x010E | 0xB811 | 1011100000010001 (=47121) | jump zero (false)
-; 0x010F | 0x032F | 0000001100101111 (=815)   | jump non zero (true)
+; 0x010D | 0x340B | 0011010000001011 (=13323) | jump zero (true)
+; 0x010E | 0x1711 | 0001011100010001 (=5905)  | jump zero (false)
+; 0x010F | 0x342F | 0011010000101111 (=13359) | jump non zero (true)
 ; 0x0110 | 0x1008 | 0001000000001000 (=4104)  | jump non zero (false)
