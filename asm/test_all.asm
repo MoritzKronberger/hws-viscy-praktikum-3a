@@ -145,7 +145,7 @@ jumpskip:                      ; r2 := 0000000000000100 (=4)
         xor r4, r4, r4
         ldil r3, jztskip & 255
         ldih r3, jztskip >> 8 ; r3 := jztskip (Adresse)
-        jz r3, r4             ; jump to jztskip label
+        jz r4, r3             ; jump to jztskip label
         ldil r2, 0xFF         ; should be skipped
         ldih r2, 0xFF         ; should be skipped
 jztskip:                      ; r2 := 1101000000001011 (=53259)
@@ -158,7 +158,7 @@ jztskip:                      ; r2 := 1101000000001011 (=53259)
         ldil r4, 1            ; r4 := --------00000001 (lo=1)
         ldil r3, jzfskip & 255
         ldih r3, jzfskip >> 8 ; r3 := jzfskip (Adresse)
-        jz r3, r4             ; do not jump to jzfskip label
+        jz r4, r3             ; do not jump to jzfskip label
         ldil r2, 17           ; should be executed, r2 := --------00010001 (lo=17)
         ldih r2, 23           ; should be executed, r2 := 1011100000010001 (=47121)
 jzfskip:                      ; r2 := 1011100000010001 (=47121)
@@ -171,7 +171,7 @@ jzfskip:                      ; r2 := 1011100000010001 (=47121)
         ldil r4, 1             ; r4 := --------00000001 (lo=1)
         ldil r3, jnztskip & 255
         ldih r3, jnztskip >> 8 ; r3 := jnztskip (Adresse)
-        jnz r3, r4             ; jump to jnztskip label
+        jnz r4, r3             ; jump to jnztskip label
         ldil r2, 0xFF          ; should be skipped
         ldih r2, 0xFF          ; should be skipped
 jnztskip:                      ; r2 := 0000001100101111 (=815)
@@ -184,7 +184,7 @@ jnztskip:                      ; r2 := 0000001100101111 (=815)
         xor r4, r4, r4         ; r4 := 0000000000000000 (=0)
         ldil r3, jnzfskip & 255
         ldih r3, jnzfskip >> 8 ; r3 := jnzfskip (Adresse)
-        jnz r3, r4             ; do not jump to jnzfskip label
+        jnz r4, r3             ; do not jump to jnzfskip label
         ldil r2, 8             ; should be executed, r2 := --------00001000 (lo=8)
         ldih r2, 16            ; should be executed, r2 := 0001000000001000 (=4104)
 jnzfskip:                      ; r2 := 0001000000001000 (=4104)
@@ -216,7 +216,7 @@ result: .res 17 ; 17 Worte reservieren (für alle Test-Cases)
 ; 0x0106 | 0x2204 | 0010001000000100 (=8708)  | shift arithmetic left
 ; 0x0107 | 0x0881 | 0000100010000001 (=2177)  | shift arithmetic right
 ; 0x0108 | 0x0002 | 0000000000000010 (=2)     | and
-; 0x0109 | 0x110A | 0001000100001010 (=4362)  | or
+; 0x0109 | 0x110A | 0001000100001010 (=4362)  | or -- FEHLER
 ; 0x010A | 0x1108 | 0001000100001000 (=4360)  | xor
 ; 0x010B | 0xEEFD | 1110111011111101 (=61181) | not
 
