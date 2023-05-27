@@ -93,9 +93,9 @@ BEGIN
 							WHEN "01" =>
 								next_state <= s_halt;
 							WHEN "10" =>
-								IF zero = '0' THEN next_state <= s_jz; ELSE next_state <= s_if1; END IF;
+								IF zero = '1' THEN next_state <= s_jz; ELSE next_state <= s_if1; END IF;
 							WHEN "11" =>
-								IF zero = '1' THEN next_state <= s_jnz; ELSE next_state <= s_if1; END IF;
+								IF zero = '0' THEN next_state <= s_jnz; ELSE next_state <= s_if1; END IF;
 							WHEN OTHERS =>
 								next_state <= s_halt; -- should never be reached
 						END CASE;
