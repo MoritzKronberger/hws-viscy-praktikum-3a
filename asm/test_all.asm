@@ -135,7 +135,7 @@ start:
         jmp r3                 ; jump to jumpskip label
         ldil r2, 0xFF          ; should be skipped
         ldih r2, 0xFF          ; should be skipped
-        jumpskip:              ; r2 := 0000000000000100 (=4)
+jumpskip:                      ; r2 := 0000000000000100 (=4)
         st [r0], r2            ; Ergebnis schreiben
         add r0, r0, r1         ; Zieladresse inkrementieren
 
@@ -148,46 +148,46 @@ start:
         jz r3, r4             ; jump to jztskip label
         ldil r2, 0xFF         ; should be skipped
         ldih r2, 0xFF         ; should be skipped
-        jztskip:              ; r2 := 0000000000000100 (=4)
+jztskip:                      ; r2 := 1101000000001011 (=53259)
         st [r0], r2           ; Ergebnis schreiben
         add r0, r0, r1        ; Zieladresse inkrementieren
 
         ; jump zero (non zero = do not jump)
-        ldil r2, 0xFF          ; r2 := --------11111111
-        ldih r2, 0xFF          ; r2 := 1111111111111111
+        ldil r2, 0xFF         ; r2 := --------11111111
+        ldih r2, 0xFF         ; r2 := 1111111111111111
         ldil r4, 1            ; r4 := --------00000001 (lo=1)
         ldil r3, jzfskip & 255
         ldih r3, jzfskip >> 8 ; r3 := jzfskip (Adresse)
         jz r3, r4             ; do not jump to jzfskip label
         ldil r2, 17           ; should be executed, r2 := --------00010001 (lo=17)
         ldih r2, 23           ; should be executed, r2 := 1011100000010001 (=47121)
-        jzfskip:              ; r2 := 1011100000010001 (=47121)
+jzfskip:                      ; r2 := 1011100000010001 (=47121)
         st [r0], r2           ; Ergebnis schreiben
         add r0, r0, r1        ; Zieladresse inkrementieren
 
         ; jump non zero (non zero = do jump)
-        ldil r2, 47             ; r2 := --------00101111 (lo=47)
-        ldih r2, 52             ; r2 := 0000001100101111 (=815)
+        ldil r2, 47            ; r2 := --------00101111 (lo=47)
+        ldih r2, 52            ; r2 := 0000001100101111 (=815)
         ldil r4, 1             ; r4 := --------00000001 (lo=1)
         ldil r3, jnztskip & 255
         ldih r3, jnztskip >> 8 ; r3 := jnztskip (Adresse)
         jnz r3, r4             ; jump to jnztskip label
         ldil r2, 0xFF          ; should be skipped
         ldih r2, 0xFF          ; should be skipped
-        jnztskip:              ; r2 := 0000001100101111 (=815)
+jnztskip:                      ; r2 := 0000001100101111 (=815)
         st [r0], r2            ; Ergebnis schreiben
         add r0, r0, r1         ; Zieladresse inkrementieren
 
         ; jump non zero (zero = do not jump)
-        ldil r2, 0xFF           ; r2 := --------11111111
-        ldih r2, 0xFF           ; r2 := 1111111111111111
+        ldil r2, 0xFF          ; r2 := --------11111111
+        ldih r2, 0xFF          ; r2 := 1111111111111111
         xor r4, r4, r4         ; r4 := 0000000000000000 (=0)
         ldil r3, jnzfskip & 255
         ldih r3, jnzfskip >> 8 ; r3 := jnzfskip (Adresse)
         jnz r3, r4             ; do not jump to jnzfskip label
         ldil r2, 8             ; should be executed, r2 := --------00001000 (lo=8)
         ldih r2, 16            ; should be executed, r2 := 0001000000001000 (=4104)
-        jnzfskip:              ; r2 := 0001000000001000 (=4104)
+jnzfskip:                      ; r2 := 0001000000001000 (=4104)
         st [r0], r2            ; Ergebnis schreiben
         add r0, r0, r1         ; Zieladresse inkrementieren
 
@@ -199,32 +199,31 @@ result: .res 17 ; 17 Worte reservieren (für alle Test-Cases)
         .end
 
 ; ---------------------------------------------------
-; Erwartete Ergebnisse:
+; Erwartete Ergebnisse (Speicher):
 ; ---------------------------------------------------
 
 ; load-Befehle:
 ; ---------------------------------------------------
-; 1. load immediate low:        --------00000101 (lo=5)
-; 2. load immediate high:       00001000-------- (hi=8)
-; 3. load immediate low & high: 0000110000000110 (=3078)
-; 4. load from memory:          0000110000000110 (=3078)
+; 0x0100 | xxxxxx | --------00000101 (lo=5)  | load immediate low
+; 0x0101 | xxxxxx | 00001000-------- (hi=8)  | load immediate high       
+; 0x0102 | 0x0C06 | 0000110000000110 (=3078) | load immediate low & high
+; 0x0103 | 0x0C06 | 0000110000000110 (=3078) | load from memory      
 
 ; ALU-Befehle:
 ; ---------------------------------------------------
-; 5. add:                   0001000100001100 (=4364)
-; 6. subtract:              0001000011111000 (=4344)
-; 7. shift arithmetic left: 0010001000000100 (=8708)
-; 8.shift arithemtic right: 0000100010000001 (=2177)
-; 9. and:                   0000000000000010 (=2)
-; 10. or:                   0001000100001010 (=4362)
-; 11. xor:                  0001000100001000 (=4360)
-; 12. not:                  1110111011111101 (=61181)
+; 0x0104 | 0x110C | 0001000100001100 (=4364)  | add
+; 0x0105 | 0x10F8 | 0001000011111000 (=4344)  | subtract
+; 0x0106 | 0x2204 | 0010001000000100 (=8708)  | shift arithmetic left
+; 0x0107 | 0x0881 | 0000100010000001 (=2177)  | shift arithmetic right
+; 0x0108 | 0x0002 | 0000000000000010 (=2)     | and
+; 0x0109 | 0x110A | 0001000100001010 (=4362)  | or
+; 0x010A | 0x1108 | 0001000100001000 (=4360)  | xor
+; 0x010B | 0xEEFD | 1110111011111101 (=61181) | not
 
 ; jump-Befehle:
 ; ---------------------------------------------------
-; 13: jump:                 nicht 1111111111111111
-; 14: jump zero (true):     nicht 1111111111111111
-; 15: jump zero (false):    nicht 1111111111111111
-; 16: jump non zero (true): nicht 1111111111111111
-; 17: jump non zero (false) nicht 1111111111111111
-        
+; 0x010C | 0x0004 | 0000000000000100 (=4)     | jump
+; 0x010D | 0xD00B | 1101000000001011 (=53259) | jump zero (true)
+; 0x010E | 0xB811 | 1011100000010001 (=47121) | jump zero (false)
+; 0x010F | 0x032F | 0000001100101111 (=815)   | jump non zero (true)
+; 0x0110 | 0x1008 | 0001000000001000 (=4104)  | jump non zero (false)
