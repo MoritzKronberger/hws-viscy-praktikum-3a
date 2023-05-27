@@ -29,7 +29,6 @@
 ; ---------------------------------------------------
 
         .org 0x100 ; Speicher ab Adresse 256 vorbelegen
-        .start
 
 data:
 
@@ -40,6 +39,7 @@ data:
 ; ---------------------------------------------------
 
         .org 0x0000 ; Hauptprogramm ab Adresse 0
+        .start
 
 start:
 
