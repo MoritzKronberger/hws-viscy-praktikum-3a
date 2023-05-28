@@ -64,36 +64,18 @@ start:
         ldil r6, loop & 255
         ldih r6, loop >> 8 ; r6 := loop (Sprungadresse)
 
-        ldil r7, add_acc & 255
-        ldih r7, add_acc >> 8 ; r7 := add (Sprungadresse)
+        ldil r7, skip_add & 255
+        ldih r7, skip_add >> 8 ; r7 := add (Sprungadresse)
 
 loop:
 
         and r4, r2, r3 ; AND Faktor 2 mit Maske => letzes Bit == 0?
 
-        jnz r4, r7 ; Faktor 2 zu Akkumulator addieren, wenn letztes Bit == 1
+        jz r4, r7 ; Faktor 1 zu Akkumulator addieren überspringen, wenn letztes Faktor-2-Bit == 0
 
-        sal r1, r1 ; Ersten Faktor nach links schieben
-        sar r2, r2 ; Zweiten Faktor nach rechts schieben (nächstes Bit betrachten)
-        
-        sub r5, r5, r3 ; Loop counter dekrementieren
+        add r0, r0, r1 ; Faktor 1 zu Akkumulator addieren
 
-        jnz r5, r6 ; Nächste Loop-Iteration
-
-        ; Loop beendet
-
-        ldil r1, result & 255
-        ldih r1, result >> 8 ; r1 := result (Adresse: 0x102)
-        st [r1], r0          ; Ergebnis in 0x102 schreiben
-
-
-        halt ; Fertig: Prozessor anhalten
-
-add_acc:
-
-        add r0, r0, r1 ; Faktor 2 zu Akkumulator addieren
-
-        ; Code dupliziert, weil: kein Register mehr übrig für Sprungadresse (& schneller)
+skip_add:
 
         sal r1, r1 ; Ersten Faktor nach links schieben
         sar r2, r2 ; Zweiten Faktor nach rechts schieben (nächstes Bit betrachten)
