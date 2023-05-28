@@ -64,27 +64,19 @@ architecture TESTBENCH of CPU_TB is
         16#000a# => "0100110100000000",  --         ldih r5, 0 ; r5 := 8 (Loop counter)
         16#000b# => "0100011000001111",  --         ldil r6, loop & 255
         16#000c# => "0100111000000000",  --         ldih r6, loop >> 8 ; r6 := loop (Sprungadresse)
-        16#000d# => "0100011100011001",  --         ldil r7, add_acc & 255
-        16#000e# => "0100111100000000",  --         ldih r7, add_acc >> 8 ; r7 := add (Sprungadresse)
+        16#000d# => "0100011100010010",  --         ldil r7, skip_add & 255
+        16#000e# => "0100111100000000",  --         ldih r7, skip_add >> 8 ; r7 := add (Sprungadresse)
         16#000f# => "0010010001001100",  --         and r4, r2, r3 ; AND Faktor 2 mit Maske => letzes Bit == 0?
-        16#0010# => "1001100011110000",  --         jnz r4, r7 ; Faktor 2 zu Akkumulator addieren, wenn letztes Bit == 1
-        16#0011# => "0001000100100000",  --         sal r1, r1 ; Ersten Faktor nach links schieben
-        16#0012# => "0001101001000000",  --         sar r2, r2 ; Zweiten Faktor nach rechts schieben (nächstes Bit betrachten)
-        16#0013# => "0000110110101100",  --         sub r5, r5, r3 ; Loop counter dekrementieren
-        16#0014# => "1001100011010100",  --         jnz r5, r6 ; Nächste Loop-Iteration
-        16#0015# => "0100000100000010",  --         ldil r1, result & 255
-        16#0016# => "0100100100000001",  --         ldih r1, result >> 8 ; r1 := result (Adresse: 0x102)
-        16#0017# => "0101100000100000",  --         st [r1], r0          ; Ergebnis in 0x102 schreiben
-        16#0018# => "1000100000000000",  --         halt ; Fertig: Prozessor anhalten
-        16#0019# => "0000000000000100",  --         add r0, r0, r1 ; Faktor 2 zu Akkumulator addieren
-        16#001a# => "0001000100100000",  --         sal r1, r1 ; Ersten Faktor nach links schieben
-        16#001b# => "0001101001000000",  --         sar r2, r2 ; Zweiten Faktor nach rechts schieben (nächstes Bit betrachten)
-        16#001c# => "0000110110101100",  --         sub r5, r5, r3 ; Loop counter dekrementieren
-        16#001d# => "1001100011010100",  --         jnz r5, r6 ; Nächste Loop-Iteration
-        16#001e# => "0100000100000010",  --         ldil r1, result & 255
-        16#001f# => "0100100100000001",  --         ldih r1, result >> 8 ; r1 := result (Adresse: 0x102)
-        16#0020# => "0101100000100000",  --         st [r1], r0          ; Ergebnis in 0x102 schreiben
-        16#0021# => "1000100000000000",  --         halt ; Fertig: Prozessor anhalten
+        16#0010# => "1001000011110000",  --         jz r4, r7 ; Faktor 1 zu Akkumulator addieren überspringen, wenn letztes Faktor-2-Bit == 0
+        16#0011# => "0000000000000100",  --         add r0, r0, r1 ; Faktor 1 zu Akkumulator addieren
+        16#0012# => "0001000100100000",  --         sal r1, r1 ; Ersten Faktor nach links schieben
+        16#0013# => "0001101001000000",  --         sar r2, r2 ; Zweiten Faktor nach rechts schieben (nächstes Bit betrachten)
+        16#0014# => "0000110110101100",  --         sub r5, r5, r3 ; Loop counter dekrementieren
+        16#0015# => "1001100011010100",  --         jnz r5, r6 ; Nächste Loop-Iteration
+        16#0016# => "0100000100000010",  --         ldil r1, result & 255
+        16#0017# => "0100100100000001",  --         ldih r1, result >> 8 ; r1 := result (Adresse: 0x102)
+        16#0018# => "0101100000100000",  --         st [r1], r0          ; Ergebnis in 0x102 schreiben
+        16#0019# => "1000100000000000",  --         halt ; Fertig: Prozessor anhalten
         16#0100# => "0000000010110000",  --         .data 0xB0 ; 176 in 0x100 ablegen
         16#0101# => "0000000010100111",  --         .data 0xA7 ; 167 in 0x101 ablegen
         16#0102# => "0000000000000000",  -- result: .res 1 ; Ein Wort reservieren
